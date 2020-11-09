@@ -1,9 +1,9 @@
-import {app, ipcMain, shell} from 'electron';
-import fs from 'fs-extra';
-import path from 'path';
-import uuid from 'tiny-uuid';
+const {app, ipcMain, shell} = require('electron');
+const fs = require('fs-extra');
+const path = require('path');
+const uuid = require('tiny-uuid');
 
-function openWithTempFile(data, suffix) {
+export function openWithTempFile(data, suffix) {
 	const tempPath = path.join(app.getPath('temp'), uuid() + suffix);
 
 	return fs.writeFile(tempPath, data).then(() => shell.openItem(tempPath));
@@ -12,5 +12,3 @@ function openWithTempFile(data, suffix) {
 ipcMain.on('open-with-temp-file', (event, data, suffix) =>
 	openWithTempFile(data, suffix)
 );
-
-export default openWithTempFile;

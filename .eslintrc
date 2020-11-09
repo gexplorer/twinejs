@@ -5,13 +5,60 @@
 		"commonjs": true,
 		"node": true
 	},
-	"extends": "eslint:recommended",
+	"extends": [
+		"eslint:recommended",
+		"plugin:jest/recommended",
+		"plugin:vue/essential",
+		"plugin:vue-i18n/recommended",
+		"@vue/prettier"
+	],
 	"parserOptions": {
-		"sourceType": "module"
+		"ecmaFeatures": {
+			"experimentalObjectRestSpread": true
+		},
+		"ecmaVersion": 8,
+		"sourceType": "module",
+		"parser": "babel-eslint"
 	},
+	"plugins": ["jest"],
 	"rules": {
-		"newline-after-var": [2, "always"],
-		"no-console": [2, {"allow": ["warn"]}],
-		"no-mixed-spaces-and-tabs": [2, "smart-tabs"]
-	}
+		"no-mixed-spaces-and-tabs": [2, "smart-tabs"],
+		"padding-line-between-statements": [
+			"error",
+			{"blankLine": "always", "prev": "*", "next": "block-like"},
+			{"blankLine": "always", "prev": "block-like", "next": "*"},
+			{"blankLine": "always", "prev": ["const", "let", "var"], "next": "*"},
+			{
+				"blankLine": "any",
+				"prev": ["const", "let", "var"],
+				"next": ["const", "let", "var"]
+			}
+		]
+	},
+	"root": true,
+	"settings": {
+		"vue-i18n": {
+			"localeDir": "./src/locales/en-us.json"
+		}
+	},
+	"overrides": [
+		{
+			"files": [
+				"**/__tests__/*.{j,t}s?(x)",
+				"**/tests/unit/**/*.spec.{j,t}s?(x)"
+			],
+			"env": {
+				"jest": true
+			},
+			"rules": {
+				"vue-i18n/no-raw-text": [0]
+			}
+		},
+		{
+			"files": ["**/*.stories.*"],
+			"rules": {
+				"vue-i18n/no-raw-text": [0]
+			}
+		}
+	]
 }

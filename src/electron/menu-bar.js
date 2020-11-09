@@ -1,8 +1,7 @@
-import {app, Menu} from 'electron';
-import {openHelp} from './help';
-import {reveal as revealStoryDirectory} from './story-directory';
+import {app, Menu, shell} from 'electron';
+import {revealStoryDirectory} from './story-directory';
 
-export default () => {
+export default function initMenuBar() {
 	const template = [
 		{
 			label: 'Edit',
@@ -25,11 +24,7 @@ export default () => {
 				{role: 'resetzoom'},
 				{role: 'zoomin'},
 				{role: 'zoomout'},
-				{type: 'separator'},
-				{role: 'togglefullscreen'},
-				{type: 'separator'},
-				{role: 'reload'},
-				{role: 'toggledevtools'}
+				{role: 'togglefullscreen'}
 			]
 		},
 		{
@@ -38,7 +33,12 @@ export default () => {
 		},
 		{
 			role: 'help',
-			submenu: [{label: 'Twine Guide', click: openHelp}]
+			submenu: [
+				{
+					label: 'Twine Guide',
+					click: () => shell.openExternal('https://twinery.org/2guide')
+				}
+			]
 		}
 	];
 
@@ -76,4 +76,4 @@ export default () => {
 	}
 
 	Menu.setApplicationMenu(Menu.buildFromTemplate(template));
-};
+}
